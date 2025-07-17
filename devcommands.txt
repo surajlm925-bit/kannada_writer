@@ -3,7 +3,10 @@ python3 -m venv venv
 source venv/bin/activate
 lsof -i :8000
 uvicorn main:app --reload
-
+kill -9 27903  
+fuser -k 8000/tcp
+pkill -f uvicorn
+pkill -f python3
 
 
 
