@@ -1,4 +1,4 @@
-# 📝 README
+# 📝 Product Requirements Document (PRD)
 
 ## 📌 Project Title:  
 **Kannada AI Content Generator with Modular API + Local Web UI**

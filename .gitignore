@@ -1,3 +1,7 @@
-# Virtual environments
+# .gitignore
+__pycache__/
+*.pyc
+.env
 venv/
-backend/venv/
+.idea/
+.DS_Store
