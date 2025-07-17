@@ -1,15 +1,7 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import UserInterface from "./pages/UserInterface";
-import AdminPanel from "./pages/AdminPanel";
-
-export default function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<UserInterface />} />
-        <Route path="/admin" element={<AdminPanel />} />
-      </Routes>
-    </Router>
-  );
-}
+const response = await fetch('http://localhost:8000/package_writer', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ prompt: input }),
+});

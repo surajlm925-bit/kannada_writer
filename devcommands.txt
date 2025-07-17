@@ -1,13 +1,40 @@
+# For Unix-like systems (Linux/macOS)
 python3 -m venv venv
-
 source venv/bin/activate
-lsof -i :8000
+
+# For Windows PowerShell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+
+# Common commands
+lsof -i :8000  # For Unix-like systems
+Get-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess | Stop-Process -Force  # For Windows
 uvicorn main:app --reload
-kill -9 27903  
-fuser -k 8000/tcp
-pkill -f uvicorn
-pkill -f python3
+# To kill processes on port 8000 in Windows:
+#   Stop-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess -Force
+# Or use:
+#   taskkill /PID <pid> /F
+pkill -f uvicorn  # For Unix-like systems
+pkill -f python3  # For Unix-like systems
 
+# For Windows, use Taskkill:
+taskkill /F /IM uvicorn.exe
+taskkill /F /IM python.exe
 
-
-
+Step 2: Install required dependencies
+npm install lucide-react
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+Step 3: Install shadcn/ui
+npx shadcn-ui@latest init
+# Choose these options:
+# - Would you like to use TypeScript? → Yes
+# - Which style would you like to use? → Default
+# - Which color would you like to use as base color? → Slate
+# - Where is your global CSS file? → src/index.css
+# - Would you like to use CSS variables for colors? → Yes
+# - Where is your tailwind.config.js located? → tailwind.config.js
+# - Configure the import alias for components? → src/components
+# - Configure the import alias for utils? → src/lib/utils
+Step 4: Install shadcn components
+npx shadcn-ui@latest add button card textarea label select
