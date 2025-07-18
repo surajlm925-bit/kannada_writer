@@ -1,14 +1,7 @@
 # For Unix-like systems (Linux/macOS)
 python3 -m venv venv
 source venv/bin/activate
-
-# For Windows PowerShell
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-
-# Common commands
-lsof -i :8000  # For Unix-like systems
-Get-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess | Stop-Process -Force  # For Windows
+lsof -i :8000
 uvicorn main:app --reload
 # To kill processes on port 8000 in Windows:
 #   Stop-Process -Id (Get-NetTCPConnection -LocalPort 8000).OwningProcess -Force
