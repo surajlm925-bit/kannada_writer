@@ -1,0 +1,48 @@
+/* Tab transition animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.tabs-content-animation {
+    animation: fadeIn 0.3s ease-out forwards;
+}
+
+.tabs-trigger-active {
+    position: relative;
+}
+
+.tabs-trigger-active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: currentColor;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+/* Active tab indicator animation */
+.tab-indicator {
+    transition: all 0.3s ease;
+}

@@ -1,15 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import UserInterface from "./pages/UserInterface";
-import AdminPanel from "./pages/AdminPanel";
+import React from 'react';
+import UserInterface from './pages/UserInterface';
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<UserInterface />} />
-        <Route path="/admin" element={<AdminPanel />} />
-      </Routes>
-    </Router>
+    <div className="App">
+      <UserInterface />
+    </div>
   );
 }

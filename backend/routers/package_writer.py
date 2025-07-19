@@ -19,7 +19,8 @@ def generate_content(prompt: str) -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-@router.post("/")
+@router.post("/", include_in_schema=True)
+@router.post("", include_in_schema=False)  # Handle both with and without trailing slash
 def generate_package(request: PackageRequest):
     text = request.text.strip()
     category = request.category or "general"

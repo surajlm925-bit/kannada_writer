@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "name": "Code Documentation Sync",
+  "description": "Monitors changes to source code files and prompts updates to relevant documentation files to keep them in sync with the codebase",
+  "version": "1",
+  "when": {
+    "type": "userTriggered",
+    "patterns": [
+      "**/*.py",
+      "**/*.jsx",
+      "**/*.js",
+      "**/*.ts",
+      "**/*.tsx",
+      "backend/config.json",
+      "frontend/package.json",
+      "config.json",
+      "requirements.txt"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "I noticed changes to source code files in the project. Please review these changes and update the relevant documentation to keep it in sync with the code. Focus on:\n\n1. If README.md needs updates to reflect new functionality, dependencies, or usage instructions\n2. If there are documentation files in /docs or markdown files that should be updated\n3. If API endpoints or configuration options have changed that should be documented\n4. If there are changes to the project structure that should be reflected in documentation\n\nPlease make targeted updates to keep documentation accurate and helpful for users of this Kannada AI Content Generator project."
+  }
+}

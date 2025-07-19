@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "name": "Code Quality Analyzer",
+  "description": "Analyzes code changes and suggests improvements for better readability, maintainability, and performance while considering the project's FastAPI and React architecture.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered",
+    "patterns": [
+      "**/*.py",
+      "**/*.js",
+      "**/*.jsx",
+      "**/*.ts",
+      "**/*.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Analyze the following code changes and provide specific improvement suggestions:\n\n1. Identify any code smells or anti-patterns\n2. Suggest appropriate design patterns that could improve the code\n3. Recommend performance optimizations where applicable\n4. Check for adherence to Python/JavaScript best practices\n5. Evaluate error handling and suggest improvements\n6. Look for opportunities to use context7 mcp server integration\n7. Consider the project's modular architecture when making suggestions\n8. Ensure suggestions maintain existing functionality\n9. Focus on readability and maintainability improvements\n\nFor Python code, consider FastAPI best practices, proper async/await usage, and Pydantic model optimization.\nFor JavaScript/TypeScript code, consider React best practices, component structure, and state management.\n\nProvide your suggestions in a clear, actionable format with code examples where appropriate."
+  }
+}

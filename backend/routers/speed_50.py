@@ -17,7 +17,8 @@ def generate_line_output(prompt: str) -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-@router.post("/")
+@router.post("/", include_in_schema=True)
+@router.post("", include_in_schema=False)  # Handle both with and without trailing slash
 def generate_speed_50(request: SpeedRequest):
     results = []
     for i, line in enumerate(request.headlines[:50]):

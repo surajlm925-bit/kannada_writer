@@ -2,7 +2,17 @@ from fastapi import APIRouter, Body
 from pydantic import BaseModel
 from typing import Optional
 import re
+import os
+from dotenv import load_dotenv
 import google.generativeai as genai
+
+# Load environment variables
+load_dotenv()
+
+# Configure Gemini API
+api_key = os.getenv('GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
+if api_key:
+    genai.configure(api_key=api_key)
 
 # Initialize Gemini model (singleton)
 model = genai.GenerativeModel("models/gemini-1.5-flash")
@@ -61,11 +71,11 @@ Top Band:
 Script:
         """,
         "c_style": """
-ಈ ಸುದ್ದಿ ಮೂಲಭೂತ ಸೌಕರ್ಯಕ್ಕೆ ಸಂಬಂಧಿಸಿದದ್ದು. ಟಾಪ್ ಬ್ಯಾಂಡ್ ಬರೆಯಿರಿ:
+ಈ ಮಾಹಿತಿಯನ್ನು ಆಧರಿಸಿ 6 ಮುಖ್ಯ ಅಂಶಗಳನ್ನು ಪಟ್ಟಿ ಮಾಡಿ:
 
-1. 6 ಲೈನ್‌ಗಳು ಮಾತ್ರ.
-2. ಪ್ರತಿಯೊಂದು ವಿಷಯವನ್ನು ವಿಭಜಿಸಿ.
-3. ಯಾವುದೇ ಪುನರಾವೃತ್ತಿ ಇಲ್ಲದಂತೆ.
+{input_text}
+
+ಪ್ರತಿ ಅಂಶವನ್ನು ಒಂದು ಸಾಲಿನಲ್ಲಿ ಬರೆಯಿರಿ. ಸರಳ ಮತ್ತು ಸ್ಪಷ್ಟವಾಗಿ.
 
 Top Band:
         """
@@ -189,11 +199,16 @@ def extract_location(text: str) -> str:
 def generate_content(prompt: str) -> str:
     try:
         response = model.generate_content(prompt)
-        return response.text.strip() if response.text else "ರಚನೆ ವಿಫಲವಾಗಿದೆ"
+        result = response.text.strip() if response.text else "ರಚನೆ ವಿಫಲವಾಗಿದೆ"
+        print(f"DEBUG - Gemini Response: {result[:200]}...")  # Debug output
+        return result
     except Exception as e:
-        return f"ದೋಷ: {str(e)}"
+        error_msg = f"ದೋಷ: {str(e)}"
+        print(f"DEBUG - Gemini Error: {error_msg}")  # Debug output
+        return error_msg
 
-@router.post("/")
+@router.post("/", include_in_schema=True)
+@router.post("", include_in_schema=False)  # Handle both with and without trailing slash
 def generate_script_and_top_band(request: TopBandRequest):
     text = request.text.strip()
     category_key = request.category or identify_category(text)
@@ -215,11 +230,24 @@ def generate_script_and_top_band(request: TopBandRequest):
 
     c_prompt = PROMPT_TEMPLATES[category_key]["c_style"].replace("{input_text}", text)
     c_output = generate_content(c_prompt)
+    
+    print(f"DEBUG - C_OUTPUT: {c_output[:300]}...")  # Debug the second API call
 
+    # Try multiple patterns to extract Top Band
     band_match = re.search(r"Top Band:\s*(.*)", c_output, re.DOTALL)
-    top_band = "\n".join(
-        [line.strip() for line in band_match.group(1).splitlines() if line.strip()]
-    ) if band_match else "ಟಾಪ್ ಬ್ಯಾಂಡ್ ಲಭ್ಯವಿಲ್ಲ."
+    if not band_match:
+        band_match = re.search(r"ಟಾಪ್ ಬ್ಯಾಂಡ್:\s*(.*)", c_output, re.DOTALL)
+    if not band_match:
+        # If no specific pattern found, use the entire response as top band
+        top_band = "\n".join([line.strip() for line in c_output.splitlines() if line.strip()])
+    else:
+        top_band = "\n".join(
+            [line.strip() for line in band_match.group(1).splitlines() if line.strip()]
+        )
+    
+    # Fallback if still empty
+    if not top_band.strip():
+        top_band = "ಟಾಪ್ ಬ್ಯಾಂಡ್ ಲಭ್ಯವಿಲ್ಲ."
 
     return {
         "category": category_key,

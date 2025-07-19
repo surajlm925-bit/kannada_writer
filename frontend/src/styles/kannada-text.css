@@ -1,0 +1,74 @@
+/* Kannada Text Styling */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap');
+
+.font-kannada {
+    font-family: 'Noto Sans Kannada', sans-serif;
+    line-height: 1.8;
+}
+
+/* Optimize Kannada text rendering */
+.kannada-text {
+    font-family: 'Noto Sans Kannada', sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Different sizes for Kannada text */
+.kannada-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.kannada-text-base {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.kannada-text-lg {
+    font-size: 1.125rem;
+    line-height: 1.8;
+}
+
+.kannada-text-xl {
+    font-size: 1.25rem;
+    line-height: 1.8;
+}
+
+/* Kannada text with proper spacing */
+.kannada-paragraph {
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+/* Kannada headings */
+.kannada-heading {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* Kannada text in different contexts */
+.kannada-top-band {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    font-weight: 500;
+}
+
+.kannada-package {
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.kannada-speed-50 {
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+/* Print styles for Kannada text */
+@media print {
+    .kannada-text {
+        font-size: 12pt;
+        line-height: 1.6;
+    }
+}

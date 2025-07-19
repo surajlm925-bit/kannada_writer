@@ -14,6 +14,7 @@
 ## 🚧 In Progress / To-Do List
 
 ### 🛠️ Technical
+
 - [ ] Create admin panel in UI to toggle functions per user
 - [ ] Hook Gemini API into all routes (configurable model)
 - [ ] Modularize `edens_bot.py` style functionality
@@ -21,11 +22,13 @@
 - [ ] Implement error handling & validation on all APIs
 
 ### 🖥️ Frontend UI
+
 - [ ] Clean UI/UX using Tailwind: tabs, collapsible sections
 - [ ] Add loader states & error handling on fetch
 - [ ] Display generated content with copy/download options
 
 ### 🔁 DevOps & Deployment
+
 - [ ] Add `.env` and environment-specific config support
 - [ ] Create build script for one-click local deployment
 - [ ] Optional: Set up Ngrok autostart script
